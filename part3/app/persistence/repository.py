@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from app import db  # Assuming you have set up SQLAlchemy in your Flask app
+from app.extensions import db  # Assuming you have set up SQLAlchemy in your Flask app
+
 
 class Repository(ABC):
     @abstractmethod
@@ -90,15 +91,19 @@ class SQLAlchemyRepository(Repository):
         return self.model.query.get(obj_id)
 
     def get_all(self):
-        return self.model.query.all()
+        places = self.model.query.all()
+        print(f"🔍 DEBUG: get_all() fetched: {places}")  # 🔹 Vérifie si des données sont récupérées
+        return places
 
     def update(self, obj_id, data):
         obj = self.get(obj_id)
         if obj:
             for key, value in data.items():
                 setattr(obj, key, value)
+            db.session.add(obj) 
             db.session.commit()
         return obj 
+    
     def delete(self, obj_id):
         obj = self.get(obj_id)
         if obj:
@@ -107,3 +112,5 @@ class SQLAlchemyRepository(Repository):
 
     def get_by_attribute(self, attr_name, attr_value):
         return self.model.query.filter_by(**{attr_name: attr_value}).first()
+    def get_by_attributeAll(self, attr_name, attr_value):
+        return self.model.query.filter_by(**{attr_name: attr_value}).all()

@@ -1,0 +1,389 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+  padding-bottom: 4rem;
+}
+
+/* Navbar */
+#nav-detail {
+  margin-bottom: 550px !important;
+}
+
+/* MAIN LAYOUT : 2 colonnes */
+main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 0 0 0;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Colonne gauche : images + infos */
+.left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Colonne droite : réservation */
+.right-col {
+  width: 100%;
+  max-width: 420px;
+  min-width: 320px;
+  position: relative;
+  /* plus besoin de margin-top */
+}
+
+/* Place Details Section */
+#place-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Galerie d'images */
+.images-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+  margin-top: 0;
+  align-items: start;
+}
+
+.main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.side-images {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 400px;
+  height: 400px;
+}
+
+.side-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+}
+
+/* Details block */
+.details {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.details .info, .details .amenities, .details .price {
+  margin-top: 1rem;
+}
+
+#reservation-box{
+  padding: 15px;
+}
+.reservation-card {
+    border: 1px solid #eee;
+    border-radius: 16px;
+  
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    position: fixed;
+
+    margin-bottom: 24px;
+    margin: 25px;
+  padding: 15px;
+}
+
+.price-row {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.per-night {
+    font-size: 1em;
+    color: #888;
+}
+#date-arrivee{
+  width: 90%;
+
+}
+#date-depart{
+  width: 90%;
+}
+.date-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+   
+}
+
+.reservation-card label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.reservation-card input, .reservation-card select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+}
+
+.reservation-card button {
+    width: 100%;
+    background: linear-gradient(90deg, #ff385c 0%, #e61e4d 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1.1em;
+    margin-top: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#booking-details {
+    margin-top: 18px;
+    font-size: 1em;
+}
+
+#booking-details .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+#booking-details .total {
+    font-weight: bold;
+    font-size: 1.2em;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+    margin-top: 8px;
+}
+
+/* Modal pour les images */
+#image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.85);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#image-modal .close-modal {
+    position: absolute;
+    top: 30px; right: 40px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+#image-modal .modal-content {
+    max-width: 90vw;
+    max-height: 80vh;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #000;
+}
+
+#image-modal .modal-prev,
+#image-modal .modal-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 50%;
+    z-index: 1001;
+}
+
+#image-modal .modal-prev { left: 40px; }
+#image-modal .modal-next { right: 40px; }
+
+/* Reviews Section */
+#reviews {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 40px;
+}
+
+#reviews h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.review-card {
+    background-color: #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+}
+
+.review-card p {
+    margin-bottom: 0.5rem;
+}
+
+/* Add Review Form */
+#add-review {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 40px;
+    padding: 2rem;
+    background-color: #fdfdfd;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+#review-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#review-form label {
+    margin: 0.5rem 0 0.2rem;
+}
+
+#review-form textarea,
+#review-form input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#review-form button {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#review-form button:hover {
+    background-color: #e03450;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f5f5f5;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+/* Responsive design */
+@media screen and (max-width: 992px) {
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 15px;
+    }
+    
+    .left-col {
+        min-width: 100%;
+        width: 100%;
+    }
+    
+    .right-col {
+        max-width: 100%;
+        width: 100%;
+        margin-top: 30px;
+    }
+    
+    .reservation-card {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .images-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .side-images {
+        width: 100%;
+        height: auto;
+        grid-template-rows: auto;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .side-image {
+        height: 150px;
+    }
+}
+
+/* Ajustements pour très petits écrans */
+@media screen and (max-width: 576px) {
+    .date-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .main-image {
+        height: 300px;
+    }
+    
+    .side-images {
+        gap: 5px;
+    }
+    
+    .side-image {
+        height: 120px;
+    }
+    
+    #image-modal .modal-prev,
+    #image-modal .modal-next {
+        font-size: 24px;
+        padding: 5px 10px;
+    }
+    
+    #image-modal .modal-prev { left: 15px; }
+    #image-modal .modal-next { right: 15px; }
+    
+    #image-modal .close-modal {
+        top: 15px;
+        right: 15px;
+        font-size: 30px;
+    }
+}

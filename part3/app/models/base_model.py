@@ -1,6 +1,7 @@
 from datetime import datetime
 import uuid
-from app import db
+from app.extensions import db
+
 
 class BaseModel(db.Model):
     """Classe de base pour les modèles SQLAlchemy"""

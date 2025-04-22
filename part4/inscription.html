@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="cont">
+        <div class="form sign-up">
+            <h2>Create your account</h2>
+            <form id="registerForm">
+                <label>
+                    <span>Names</span>
+                    <input type="text" name="first_name" placeholder="Prénom" required />
+                </label>
+                <label>
+                    <span>LasTname</span>
+                    <input type="text" name="last_name" placeholder="Nom" required />
+                </label>
+                <label>
+                    <span>EMAIL</span>
+                    <input type="email" id="email" name="email" required>
+                </label>
+                <label>
+                    <span>PASSWORD</span>
+                    <input type="password" id="password" name="password" required>
+                </label>
+                <button type="submit" class="submit">SIGN UP</button>
+                <div id="error-message"></div>
+            </form>
+        </div>
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img__text">
+                    <h2>Already registered?</h2>
+                    <p>Sign in to continue your journey!</p>
+                </div>
+                <div class="img__btn">
+                    <a href="login.html">
+                        <span class="m--up">SIGN IN</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/register.js"></script>
+</body>
+</html>

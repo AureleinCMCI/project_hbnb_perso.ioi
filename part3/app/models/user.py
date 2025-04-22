@@ -1,6 +1,7 @@
-from app import db, bcrypt
+from app.extensions import db, bcrypt
 import uuid
 from .base_model import BaseModel  # Import BaseModel from its module
+from sqlalchemy.orm import relationship
 
 class User(BaseModel):
     __tablename__ = 'users'
@@ -10,11 +11,11 @@ class User(BaseModel):
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    cart = relationship('Cart', back_populates='user', uselist=False)  # Un utilisateur peut avoir un seul panier
 
     def hash_password(self, password):
         """Hash the password before storing it."""
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
-
-    def verify_password(self, password):
-        """Verify the hashed password."""
-        return bcrypt.check_password_hash(self.password, password)
+    
+   
+    

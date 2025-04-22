@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="cont">
+        <div class="form sign-in">
+            <h2>Welcome back,</h2>
+            <form id="login-form">
+                <label>
+                    <span>EMAIL</span>
+                    <input type="email" id="email" name="email" required>
+                </label>
+                <label>
+                    <span>PASSWORD</span>
+                    <input type="password" id="password" name="password" required>
+                </label>
+                <a href="change-password.html">
+                    <p class="forgot-pass">Forgot password?</p>
+                </a>
+                <button type="submit" class="submit">SIGN IN</button>
+                <div id="error-message"></div>
+            </form>
+        </div>
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img__text">
+                    <h2>New here?</h2>
+                    <p>Sign up and discover great amount of new opportunities!</p>
+                </div>
+                <div class="img__btn">
+                    <a href="inscription.html">
+                        <span class="m--up">SIGN UP</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/login.js"></script>
+</body>
+</html>

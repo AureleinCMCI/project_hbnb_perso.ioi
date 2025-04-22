@@ -30,19 +30,22 @@ class ReviewList(Resource):
             'place_id': new_review.place_id
         }, 201
 
+
     def get(self):
-        reviews = facade.review_repo.get_all()
-        if not reviews:
-            return {'message': 'No reviews found'}, 404
+            """Retrieve all reviews"""
+            reviews = facade.get_all_reviews()  # ✅ Utilisation correcte de `facade`
+            if not reviews:
+                return {'message': 'No reviews found'}, 404
 
-        review_list = [{
-            'id': review.id,
-            'text': review.text,
-            'user_id': review.user_id,
-            'place_id': review.place_id
-        } for review in reviews]
-
-        return review_list, 200
+            return [
+                {
+                    'id': review.id,
+                    'text': review.text,
+                    'rating': review.rating,
+                    'user_id': review.user_id,
+                    'place_id': review.place_id
+                } for review in reviews
+            ], 200
 
 @api.route('/<review_id>')
 class ReviewResource(Resource):
@@ -60,43 +63,20 @@ class ReviewResource(Resource):
             'place_id': review.place_id
         }, 200
 
-    @api.expect(review_model)
+    @api.expect(review_model, validate=True)
     @api.response(200, 'Review updated successfully')
     @api.response(404, 'Review not found')
     @api.response(400, 'Invalid input data')
-    @api.response(500, 'Internal Server Error')
-    def put(self, review_id):
-        review_data = api.payload  # JSON reçu de la requête
+    def put(self, review_id):  # ✅ Assure-toi que cette méthode existe bien !
+        """Update a review"""
+        review_data = api.payload
 
-        review = facade.get_review(review_id)  # Récupération de l'avis en base
-        if not review:
+        updated_review = facade.update_review(review_id, review_data)
+
+        if not updated_review:
             return {'error': 'Review not found'}, 404
 
-        try:
-            # Mise à jour des champs seulement si présents dans la requête
-            if 'text' in review_data:
-                review.text = review_data['text']
-            if 'rating' in review_data:
-                review.rating = review_data['rating']
-            if 'user_id' in review_data:
-                review.user_id = review_data['user_id']
-            if 'place_id' in review_data:
-                review.place_id = review_data['place_id']
-
-            # Sauvegarde des modifications
-            facade.update_review(review_id, review)
-
-            return {
-                'message': 'Review updated successfully',
-                'id': review.id,
-                'text': review.text,
-                'rating': review.rating,
-                'user_id': review.user_id,
-                'place_id': review.place_id
-            }, 200
-        except Exception as e:
-            print(f"Error updating review: {e}")
-            return {'message': 'Internal Server Error'}, 500
+        return updated_review.to_dict(), 200 
 
 
 
@@ -109,25 +89,28 @@ class ReviewResource(Resource):
 
         return {'message': 'Review deleted successfully'}, 200
     
-
-    
 @api.route('/places/<place_id>/reviews')
 class PlaceReviews(Resource):
     @api.response(200, 'Reviews retrieved successfully')
     @api.response(404, 'No reviews found for this place')
     def get(self, place_id):
         """Retrieve all reviews for a specific place"""
-        print(f"DEBUG: Retrieving reviews for place ID: {place_id}")  # Debug
+        print(f"🔍 DEBUG: Retrieving reviews for place ID: {place_id}")  # Debug
 
-        reviews = facade.get_reviews_by_place(place_id)  # Utilisation de la méthode existante
+        reviews = facade.get_reviews_by_place(place_id)  # ✅ Récupérer les avis sous forme de liste
 
         if not reviews:
             return {'message': 'No reviews found for this place'}, 404
 
+        # ✅ Convertir chaque review en dictionnaire
         return [
             {
                 'id': review.id,
                 'text': review.text,
-                'rating': review.rating
-            } for review in reviews
+                'rating': review.rating,
+                'user_id': review.user_id,
+                'place_id': review.place_id,
+                'created_at': review.created_at.isoformat(),  # Format ISO pour la lisibilité JSON
+                'updated_at': review.updated_at.isoformat()
+            } for review in reviews  # 🔥 Boucle bien sur chaque review !
         ], 200

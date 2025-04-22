@@ -1,7 +1,8 @@
-from app import db
+
 import uuid
 from datetime import datetime
 from .base_model import BaseModel
+from app.extensions import db
 
 class Review(BaseModel):
     """Modèle SQLAlchemy pour une évaluation (Review)"""

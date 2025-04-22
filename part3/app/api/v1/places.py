@@ -11,7 +11,8 @@ place_model = api.model('Place', {
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
     'owner_id': fields.String(required=True, description='ID of the owner'),
-    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's")
+    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's"),
+    'address': fields.String(required=True, description="l'address !")
 })
 
 @api.route('/')
@@ -36,32 +37,20 @@ class PlaceList(Resource):
             return {'error': 'Longitude must be between -180 and 180'}, 400
         
         new_place = facade.create_place(place_data)
-        return {
-            'id': new_place.id,
-            'title': new_place.title,
-            'description': new_place.description,
-            'price': new_place.price,
-            'latitude': new_place.latitude,
-            'longitude': new_place.longitude,
-            'owner_id': new_place.owner_id,
-            'amenities': new_place.amenities
-        }, 201
 
+        return new_place.to_dict(), 201
+    
     def get(self):
+        """Retrieve the list of places"""
         places = facade.get_all_places()
-        if not places:
-            return {'message': 'No places found'}, 404
+        print(f"🔍 DEBUG: places fetched = {places}, type = {type(places)}")  # 🔹 Debug
 
-        place_list = [{
-            'id': place.id,
-            'title': place.title,
-            'description': place.description,
-            'price': place.price,
-            'latitude': place.latitude,
-            'longitude': place.longitude
-        } for place in places]
+        if not places or len(places) == 0:
+            return {'message': 'No places found'}, 404  # ✅ Ajoute un message clair
 
-        return place_list, 200
+        return [place.to_dict() for place in places], 200 
+
+       
 
 @api.route('/<place_id>')
 class PlaceResource(Resource):
@@ -75,16 +64,18 @@ class PlaceResource(Resource):
         if not place:
             return {'error': 'Place not found'}, 404
 
+        
         return {
+            'message': 'Place updated successfully',
             'id': place.id,
             'title': place.title,
             'description': place.description,
             'price': place.price,
             'latitude': place.latitude,
             'longitude': place.longitude,
-            'owner_id': place.owner_id,
-            'amenities': place.amenities
-        }, 200
+            'address':place.address
+        }, 200  # ✅ Utilise la méthode to_dict()
+
 
     @api.expect(place_model)
     @api.response(200, 'Place updated successfully')
@@ -123,8 +114,7 @@ class PlaceResource(Resource):
             place.price = place_data.get('price', place.price)
             place.latitude = place_data.get('latitude', place.latitude)
             place.longitude = place_data.get('longitude', place.longitude)
-
-            facade.update_place(place_id, place)
+            facade.update_place(place_id, place_data)
 
             return {
                 'message': 'Place updated successfully',
@@ -133,7 +123,7 @@ class PlaceResource(Resource):
                 'description': place.description,
                 'price': place.price,
                 'latitude': place.latitude,
-                'longitude': place.longitude
+                'longitude': place.longitude,
             }, 200
         except Exception as e:
             print(f"Error updating place: {e}")

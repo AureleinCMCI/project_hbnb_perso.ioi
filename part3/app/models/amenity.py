@@ -1,7 +1,9 @@
-from app import db
+
 import uuid
 from datetime import datetime
 from .base_model import BaseModel
+from app.extensions import db
+
 
 class Amenity(db.Model):
     __tablename__ = 'amenities'

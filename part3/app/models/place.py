@@ -1,8 +1,11 @@
-from app import db
+
 import uuid
 from datetime import datetime
 from sqlalchemy.orm import validates
 from .base_model import BaseModel
+from app.extensions import db
+
+
 
 place_amenities = db.Table('place_amenities',
     db.Column('place_id', db.String(36), db.ForeignKey('places.id'), primary_key=True),
@@ -20,6 +23,7 @@ class Place(BaseModel):
     longitude = db.Column(db.Float, nullable=False)
     owner_id = db.Column(db.String(36), nullable=False)  # L'ID du propriétaire (UUID)
     amenities = db.relationship('Amenity', secondary=place_amenities, backref='places')
+    address = db.Column(db.String(255), nullable=False)
 
     @validates('title')
     def validate_title(self, key, title):
@@ -65,7 +69,8 @@ class Place(BaseModel):
             "latitude": self.latitude,
             "longitude": self.longitude,
             "owner_id": self.owner_id,
-            "amenities": [amenity.to_dict() for amenity in self.amenities]
+            "amenities": [amenity.to_dict() for amenity in self.amenities],
+            "address": self.address
         }
 
     def __repr__(self):
